@@ -73,7 +73,7 @@ def get_MNIST(augment, dataroot, download):
     transformations.extend([transforms.ToTensor(), preprocess])
     transform = transforms.Compose(transformations)
 
-    one_hot_encode = get_one_hot_encode(num_classes)
+    one_hot_encode = lambda target: F.one_hot(torch.tensor(target), num_classes)
 
     path = Path(dataroot) / 'data' / 'MNIST'
     train_dataset = datasets.MNIST(path, split='train',
