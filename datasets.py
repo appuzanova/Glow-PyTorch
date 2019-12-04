@@ -61,8 +61,8 @@ def get_CIFAR10(augment, dataroot, download):
     return image_shape, num_classes, train_dataset, test_dataset
 
 
-def get_SVHN(augment, dataroot, download):
-    image_shape = (32, 32, 3)
+def get_MNIST(augment, dataroot, download):
+    image_shape = (28, 28, 1)
     num_classes = 10
 
     if augment:
@@ -75,13 +75,13 @@ def get_SVHN(augment, dataroot, download):
 
     one_hot_encode = get_one_hot_encode(num_classes)
 
-    path = Path(dataroot) / 'data' / 'SVHN'
-    train_dataset = datasets.SVHN(path, split='train',
+    path = Path(dataroot) / 'data' / 'MNIST'
+    train_dataset = datasets.MNIST(path, split='train',
                                   transform=transform,
                                   target_transform=one_hot_encode,
                                   download=download)
 
-    test_dataset = datasets.SVHN(path, split='test',
+    test_dataset = datasets.MNIST(path, split='test',
                                  transform=transform,
                                  target_transform=one_hot_encode,
                                  download=download)
