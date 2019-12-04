@@ -34,7 +34,6 @@ def squeeze2d(input, factor):
         return input
 
     B, C, H, W = input.size()
-    print(input.size())
 
     assert H % factor == 0 and W % factor == 0, "H or W modulo factor is not 0"
 
