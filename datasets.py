@@ -65,7 +65,7 @@ def get_MNIST(augment, dataroot, download):
     image_shape = (28, 28, 1)
     num_classes = 10
 
-    test_transform = transforms.Compose([transforms.ToTensor(), preprocess])
+    test_transform = transforms.Compose([transforms.Grayscale(), transforms.ToTensor(), preprocess])
 
     if augment:
         transformations = [transforms.RandomAffine(0, translate=(0.1, 0.1)),
