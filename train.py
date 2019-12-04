@@ -15,7 +15,7 @@ from ignite.engine import Engine, Events
 from ignite.handlers import ModelCheckpoint, Timer
 from ignite.metrics import RunningAverage, Loss
 
-from datasets import get_CIFAR10, get_SVHN
+from datasets import get_CIFAR10, get_MNIST
 from model import Glow
 
 
@@ -31,9 +31,9 @@ def check_dataset(dataset, dataroot, augment, download):
     if dataset == "cifar10":
         cifar10 = get_CIFAR10(augment, dataroot, download)
         input_size, num_classes, train_dataset, test_dataset = cifar10
-    if dataset == "svhn":
-        svhn = get_SVHN(augment, dataroot, download)
-        input_size, num_classes, train_dataset, test_dataset = svhn
+    if dataset == "mnist":
+        mnist = get_MNIST(augment, dataroot, download)
+        input_size, num_classes, train_dataset, test_dataset = mnist
 
     return input_size, num_classes, train_dataset, test_dataset
 
@@ -308,7 +308,7 @@ if __name__ == "__main__":
         "--dataset",
         type=str,
         default="cifar10",
-        choices=["cifar10", "svhn"],
+        choices=["cifar10", "mnist"],
         help="Type of the dataset to be used.",
     )
 
