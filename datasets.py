@@ -73,7 +73,7 @@ def get_MNIST(augment, dataroot, download):
     else:
         transformations = []
 
-    transformations.extend([transforms.Resize(32), transforms.Grayscale(), transforms.ToTensor(), preprocess])
+    transformations.extend([transforms.Grayscale(), transforms.ToTensor(), preprocess])
 
     train_transform = transforms.Compose(transformations)
 
