@@ -79,13 +79,13 @@ def get_MNIST(augment, dataroot, download):
 
     one_hot_encode = lambda target: F.one_hot(torch.tensor(target), num_classes)
 
-    path = Path(dataroot) / 'data' / 'MNIST'
-    train_dataset = datasets.MNIST(path, train=True,
+    path = Path(dataroot) / 'data' / 'FashionMNIST'
+    train_dataset = datasets.FashionMNIST(path, train=True,
                                      transform=train_transform,
                                      target_transform=one_hot_encode,
                                      download=download)
 
-    test_dataset = datasets.MNIST(path, train=False,
+    test_dataset = datasets.FashionMNIST(path, train=False,
                                     transform=test_transform,
                                     target_transform=one_hot_encode,
                                     download=download)
