@@ -29,6 +29,38 @@ def postprocess(x):
     return torch.clamp(x, 0, 255).byte()
 
 
+def get_SVHN(augment, dataroot, download):
+    image_shape = (32, 32, 3)
+    num_classes = 10
+
+    test_transform = transforms.Compose([transforms.ToTensor(), preprocess])
+
+    if augment:
+        transformations = [transforms.RandomAffine(0, translate=(0.1, 0.1)),
+                           transforms.RandomHorizontalFlip()]
+    else:
+        transformations = []
+
+    transformations.extend([transforms.ToTensor(), preprocess])
+
+    train_transform = transforms.Compose(transformations)
+
+    one_hot_encode = lambda target: F.one_hot(torch.tensor(target), num_classes)
+
+    path = Path(dataroot) / 'data' / 'SVHN'
+    train_dataset = datasets.SVHN(path, split="train",
+                                     transform=train_transform,
+                                     target_transform=one_hot_encode,
+                                     download=download)
+
+    test_dataset = datasets.SVHN(path, split="test",
+                                    transform=test_transform,
+                                    target_transform=one_hot_encode,
+                                    download=download)
+
+    return image_shape, num_classes, train_dataset, test_dataset
+
+
 def get_CIFAR10(augment, dataroot, download):
     image_shape = (32, 32, 3)
     num_classes = 10
@@ -60,39 +92,8 @@ def get_CIFAR10(augment, dataroot, download):
 
     return image_shape, num_classes, train_dataset, test_dataset
 
-def get_SVHN(augment, dataroot, download):
-    image_shape = (32, 32, 3)
-    num_classes = 10
 
-    test_transform = transforms.Compose([transforms.ToTensor(), preprocess])
-
-    if augment:
-        transformations = [transforms.RandomAffine(0, translate=(0.1, 0.1)),
-                           transforms.RandomHorizontalFlip()]
-    else:
-        transformations = []
-
-    transformations.extend([transforms.ToTensor(), preprocess])
-
-    train_transform = transforms.Compose(transformations)
-
-    one_hot_encode = lambda target: F.one_hot(torch.tensor(target), num_classes)
-
-    path = Path(dataroot) / 'data' / 'SVHN'
-    train_dataset = datasets.SVHN(path, train=True,
-                                     transform=train_transform,
-                                     target_transform=one_hot_encode,
-                                     download=download)
-
-    test_dataset = datasets.SVHN(path, train=False,
-                                    transform=test_transform,
-                                    target_transform=one_hot_encode,
-                                    download=download)
-
-    return image_shape, num_classes, train_dataset, test_dataset
-
-
-def get_FashionMNIST(augment, dataroot, download):
+def get_MNIST(augment, dataroot, download):
     image_shape = (28, 28, 1)
     num_classes = 10
 
@@ -123,7 +124,7 @@ def get_FashionMNIST(augment, dataroot, download):
 
     return image_shape, num_classes, train_dataset, test_dataset
 
-def get_MNIST(augment, dataroot, download):
+def get_NOTFMNIST(augment, dataroot, download):
     image_shape = (28, 28, 1)
     num_classes = 10
 
