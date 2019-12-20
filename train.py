@@ -15,7 +15,7 @@ from ignite.engine import Engine, Events
 from ignite.handlers import ModelCheckpoint, Timer
 from ignite.metrics import RunningAverage, Loss
 
-from datasets import get_CIFAR10, get_MNIST
+from datasets import get_CIFAR10, get_MNIST, get_FashionMNIST, get_SVHN
 from model import Glow
 
 
@@ -34,7 +34,13 @@ def check_dataset(dataset, dataroot, augment, download):
     if dataset == "mnist":
         mnist = get_MNIST(augment, dataroot, download)
         input_size, num_classes, train_dataset, test_dataset = mnist
-
+    if dataset == "fashionmnist":
+        fashionmnist = get_FashionMNIST(augment, dataroot, download)
+        input_size, num_classes, train_dataset, test_dataset = fashionmnist
+    if dataset == "svhn":
+        svhn = get_SVHN(augment, dataroot, download)
+        input_size, num_classes, train_dataset, test_dataset = svhn
+    
     return input_size, num_classes, train_dataset, test_dataset
 
 
